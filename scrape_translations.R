@@ -3,7 +3,7 @@ library(stringr)
 library(XML)
 library(dplyr)
 
-download.file("https://www.reddit.com/r/PuzzleAndDragons/wiki/ryulong/list2", destfile = "ryulong_names.html")
+download.file("https://www.reddit.com/r/PuzzleAndDragons/wiki/ryulong/list2/", destfile = "ryulong_names.html")
 doc <- htmlParse("ryulong_names.html")
 names_string <- as(doc, "character")
 location1 <- str_locate(names_string,'This is page 2 of the list, continued from <a href="/r/PuzzleAndDragons/wiki/ryulong/list" rel="nofollow">page 1</a>.</p>
@@ -19,13 +19,9 @@ all_data_df2 <- subset(all_data_df, V2!="?" & V2!="? [Original Art Lina]") #remo
 all_data_df2$V2 <- str_replace_all(all_data_df2$V2, "&amp;", "&") #adjust text formatting
 
 #extract numeric ids from new_card_announce post, replace text for each wave of new cards
-new_cards <- strsplit("】
-    [8726] 名探偵コナン 灰原哀セレクション上巻【灰原哀】
-    [8727] 名探偵コナンvs.怪盗キッド完全版1巻【怪盗キッド】
-    [8678] 探偵・江戸川コナン
-    [8679] 工藤新一
-    [8680] 工藤新一【原作版】
-    [8681] 名探偵コナン 工藤新一セレクションｖｏｌ．１【工藤新一】", split="\n")[[1]][-1]
+new_cards <- strsplit("
+    [9059] 極醒の紅魔王・パイモン
+    [9060] 極醒の冥魔王・パイモン", split="\n")[[1]][-1]
 
 new_cards_df <- as.data.frame(matrix(unlist(str_split(new_cards, pattern="\\]", n=2)), ncol=2, byrow=TRUE))
 new_cards_df$V1 <- str_replace_all(new_cards_df$V1, "[^0-9]", "")
