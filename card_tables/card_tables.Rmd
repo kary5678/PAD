@@ -1,0 +1,65 @@
+---
+title: "Spawn Charts"
+author: 
+date: "2023-08-14"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(stringr)
+library(dplyr)
+library(kableExtra)
+```
+
+```{r Generate Image Row, echo=FALSE}
+host_url <- readLines("host_url.txt")
+
+get_images <- function(cards_string, width=75) {
+  html_urls <- ""
+  card_details <- strsplit(cards_string, ",\\s")[[1]]
+  for (detail in card_details) {
+    detail <- str_trim(detail)
+    name <- str_extract(detail, "(?:(?! [0-9]{3,}+).)*")
+    id <- str_extract(detail, "[0-9]{3,}+$")
+    if (as.numeric(id) < 10000) 
+      id_link <- paste0(host_url, "0", id, ".png")
+    else 
+      id_link <- paste0(host_url, id, ".png")
+    
+    id_url <- paste0("<a href='", id_link, "' title=\"", id_link,
+                     "\" target=\"_blank\"> <img src = ", id_link,
+                     " width=\"", width, "\"><div class=\"caption\">", name, "</div></a>")
+    html_urls <- paste0(html_urls, id_url)
+  }
+  return(html_urls)
+}
+```
+
+<style>
+a {
+    display: inline-block;
+    text-align: center;
+    color: #4C4E52;
+    margin: 1px;
+}
+</style>
+
+### Skill-up Dungeons: Prince of Tennis II
+
+```{r Prince of Tennis II, echo=FALSE}
+table <- data.frame(
+  floor=c("✩8", "✩7 No.1", "✩7 No.2", "✩6 No.1", "✩6 No.2"),
+  images=c(get_images("Ryoma 7880, Shusuke 7892, Kunimitsu 7889, Keigo 7883, Kuranosuke 7895,
+                       Seiichi 7886, Kanata 10065, Kazuya 10059, Jujiro 10062, Duke 10068"),
+           get_images("Kaoru 10086, Eiji 10083, Shuichiro 10071, Kiyosumi 7910,
+                       Jin 7907, Yushi 7898, Rin 10077, Eishiro 7913"),
+           get_images("Kippei 10074, Senri 10080, Kintaro 7916, Renji 7904, Genichiro 7901"),
+           get_images("Sadaharu 7919, Shinji 7934, Yuta 7937, Hajime 10095"),
+           get_images("Chotaro 10092, Ryo 10089, Wakashi 7922, Masaharu 7928,
+                       Bunta 7931, Kei 7940, Akaya 7925")))
+
+knitr::kable(table, format = 'html', escape = FALSE, col.names = NULL) %>%
+  kable_styling(bootstrap_options = "striped") %>%
+  column_spec(1, extra_css = "vertical-align:middle;")
+```
