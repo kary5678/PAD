@@ -1,7 +1,7 @@
 ---
 title: "Spawn Charts"
 author: 
-date: "2023-08-14"
+date: "2023-08-31"
 output: html_document
 ---
 
@@ -45,10 +45,30 @@ a {
 }
 </style>
 
+### Skill-up Dungeons: Spy × Family
+
+```{r Spy x Family, echo=FALSE}
+spyx_table <- data.frame(
+  floor=c("Affiliates of Eden Academy", "Those Who Hold Secrets", "The Forgers"),
+  images=c(get_images("Henry<br>(✩6) 10242, Emile<br>(✩6) 10244, Ewen<br>(✩6) 10246,
+                      Becky<br>(✩6) 10240, Damian<br>(✩6) 10238, Anya (Uniform)<br>(✩6) 10234,
+                      Anya & Damian<br>& Becky (✩8) 10216", width=93),
+           get_images("Franky<br>(✩6) 10236, Sylvia<br>(✩7) 10226, Yuri<br>(✩7) 10228, Fiona<br>(✩7) 10230,
+                      Yor & Yuri<br>(✩8) 10214, Loid & Fiona<br>(✩8) 10212", width=93),
+           get_images("Bond<br>(✩7) 10232, Anya & Bond<br>(✩8) 10210,
+                      Anya (Casual)<br>(✩7) 10221, Loid & Anya &<br>Yor (✩8) 10208", width=93)))
+
+knitr::kable(spyx_table, format = 'html', escape = FALSE, col.names = NULL) %>%
+  kable_styling(bootstrap_options = "striped") %>%
+  column_spec(1, extra_css = "vertical-align:middle; font-size:17px;")
+```
+
+No skill-ups for `r paste0('<img src="', host_url, '10223.png" width="50">')` Yor (✩7) or `r paste0('<img src="', host_url, '10218.png" width="50">')` Loid (✩7) as they come max-skilled
+
 ### Skill-up Dungeons: Prince of Tennis II
 
 ```{r Prince of Tennis II, echo=FALSE}
-table <- data.frame(
+tennis_table <- data.frame(
   floor=c("✩8", "✩7 No.1", "✩7 No.2", "✩6 No.1", "✩6 No.2"),
   images=c(get_images("Ryoma 7880, Shusuke 7892, Kunimitsu 7889, Keigo 7883, Kuranosuke 7895,
                        Seiichi 7886, Kanata 10065, Kazuya 10059, Jujiro 10062, Duke 10068"),
@@ -59,7 +79,7 @@ table <- data.frame(
            get_images("Chotaro 10092, Ryo 10089, Wakashi 7922, Masaharu 7928,
                        Bunta 7931, Kei 7940, Akaya 7925")))
 
-knitr::kable(table, format = 'html', escape = FALSE, col.names = NULL) %>%
+knitr::kable(tennis_table, format = 'html', escape = FALSE, col.names = NULL) %>%
   kable_styling(bootstrap_options = "striped") %>%
   column_spec(1, extra_css = "vertical-align:middle;")
 ```
